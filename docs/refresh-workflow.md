@@ -46,3 +46,11 @@ uploads as the normal workflow. Do not extract browser cookies or bypass paywall
 
 Private captures and snapshots are Git-ignored. Tests/fixtures must contain only
 sanitized, synthetic identifiers and scoring choices.
+
+
+After the verified snapshot, run `python -m yahoo_waiver_assistant report` directly
+and read its private output. Lead with existing-roster lineup opportunities,
+material add/drop differences, future bye shortages, and data gaps. Each candidate
+row is an independent alternative. Research current news before promoting a
+provisional scenario to advice. Do not treat observed winning bids as calibrated
+clearance probabilities, and do not fill missing weighted features with guesses.

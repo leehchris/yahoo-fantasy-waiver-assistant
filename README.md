@@ -145,3 +145,66 @@ opt-in and force Low confidence. The caller must still supply lineup probability
 market/clearance probability, bid economics, and candidate score. These inputs
 are not fabricated from projections alone. This adapter does not optimize lineup
 eligibility or validate every Yahoo roster rule, and it never executes transactions.
+
+
+## Snapshot-based waiver report
+
+    python -m yahoo_waiver_assistant report
+
+The report reads the latest private snapshot without OAuth or network calls and
+saves `data/private/waiver-report-*.json` plus a readable `.md` report. The assistant can run and read this
+directly; the user does not need to copy commands or upload results. Use
+`--snapshot PATH` to choose a capture and `--limit N` to control the displayed rows.
+Refresh the API data and Yahoo browser projections first for a new league check.
+
+The report contains:
+
+- Current selected lineup versus the best projected lineup from existing players.
+- Exact player-to-slot assignment, including flex eligibility, unique players,
+  reserve exclusions, and required slots. Missing forecasts remain unknown.
+- Independent add/drop comparisons against that optimized baseline, not merely
+  candidate points minus the weakest bench projection. Open spots and undroppable
+  flags are respected. Ties preserve future bye coverage and recorded workload.
+- Three-week structural bye alerts. These identify uncovered slots; they do not
+  predict future points or assume a current injury lasts indefinitely.
+- Carries, targets, receptions, and actual points across recent weeks. Opportunity
+  changes compare the latest two non-bye weeks with the prior two when available.
+- Recent successful single-player winning FAAB bids by position/team, with sample
+  sizes, and opponents' current FAAB and structural roster shortages.
+- Existing weighted-score coverage and explicit missing inputs. Missing weights
+  are not silently zero-filled or reweighted.
+
+The original 1.5-point material-upgrade rule remains. An exact best-lineup delta
+can now replace the old player-difference times lineup-probability calculation.
+Free agents use `PICK UP FREE AGENT` with a zero bid. Waivers still use CLAIM,
+VALUE CLAIM, WAIT FOR FREE AGENCY, or PASS when sufficient inputs exist; REVIEW
+marks incomplete decisions. No transaction is executed.
+
+All automated comparisons are Low confidence until current player/teammate news
+and longer-term inputs are assessed. Winning bids alone cannot establish a
+clearance probability or an economically justified bid ceiling. A useful waiver
+candidate without these inputs gets REVIEW and null bid fields. No FAAB demand
+probability, lineup-start probability, or complete candidate score is invented.
+
+### Model inputs
+
+`--policy data/private/report-policy.json` accepts optional calibrated inputs,
+keyed by Yahoo player key. Supported fields are `clearance_probabilities` (0-1),
+`winning_bid_estimates` and `bid_ceilings` (whole dollars), `feature_scores`
+(the existing seven feature names, 0-100), `upside_stash_scores` (0-100), and
+`news_overrides` (booleans). Unknown players/fields and invalid values are rejected.
+Policy inputs should come from verified news or an explicit model, not guesses.
+
+The initial automatic feature transforms are documented in each report:
+projection percentile among available positional peers, and opportunity score
+`clamp(50 + 5 * carries/targets change, 0, 100)`. These are transparent initial
+heuristics, not calibrated predictors. Projection surprise, points above
+replacement as a weighted feature, future/playoff schedule, and market-demand
+scores remain missing unless explicitly supplied. The complete existing score
+is calculated only when all seven features are available.
+
+Rows are alternatives, not an acquisition plan to execute together. Game locks,
+IR moves, positional maxima, and other Yahoo transaction rules still require
+review. Zero-projection/bye players may have future stash value beyond this
+current-week screen. Genuine pregame captures are required before historical
+projection-surprise analysis becomes available.

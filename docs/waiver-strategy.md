@@ -115,3 +115,23 @@ Every recommendation must include:
 - Use position-specific matchup strength, not generic "bad defense" labels.
 - Preserve FAAB and roster flexibility when an upgrade is marginal.
 - Re-scan immediately after waivers for useful players dropped by other teams.
+
+
+## Live-data implementation
+
+The snapshot report connects the existing decision rules to Yahoo forecasts,
+recent workload, roster-slot assignment, opponent context, and observed bid
+history. Exact optimized-lineup changes prevent bench-to-bench point differences
+from being mistaken for starting-lineup improvement. The material threshold and
+original complete-input waiver decisions remain in place.
+
+FA players use PICK UP FREE AGENT; REVIEW is a data-gap state, not an additional
+waiver strategy. Reports with incomplete news/future context are provisional and
+Low confidence. Empirical winning bids are displayed as observations, not used
+to manufacture clearance probabilities or justified bid ceilings. The existing
+weighted score is computed only with all seven feature scores present.
+
+The current report optimizes this week's projected lineup and flags upcoming bye
+holes. It does not yet optimize championship value, future-week projections,
+full-roster stash replacements, or schedule strength through Week 17. These gaps
+remain explicit rather than being collapsed into one-week projection advice.

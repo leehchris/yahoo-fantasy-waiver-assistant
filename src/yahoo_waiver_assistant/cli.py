@@ -14,6 +14,7 @@ from .config import Settings
 from .oauth import TokenStore, YahooOAuth, build_authorization_url, new_state
 from .yahoo_json import discovery_summary, normalize_roster, normalize_players, normalize_transactions
 from .snapshot import create_snapshot, save_snapshot
+from .report import build_report, latest_snapshot, save_report, render_report
 
 
 def _services():
@@ -151,6 +152,10 @@ def build_parser() -> argparse.ArgumentParser:
                           help="Completed prior weeks to fetch (default: 4)")
     snapshot.add_argument("--projections-file", type=Path,
                           help="Private JSON file of provider projections already scored for this league")
+    report = subparsers.add_parser("report", help="Build a private waiver report from a captured snapshot")
+    report.add_argument("--snapshot", type=Path, help="Defaults to the latest private snapshot")
+    report.add_argument("--policy", type=Path, help="Optional private calibrated model inputs")
+    report.add_argument("--limit", type=int, default=15)
     return parser
 
 
@@ -174,6 +179,13 @@ def main() -> None:
         payload = create_snapshot(client, args.team_key or os.getenv("YAHOO_TEAM_KEY"), args.week,
                                   history_weeks=args.history_weeks, projections_file=projections_file)
         print(f"Saved private snapshot: {save_snapshot(payload).resolve()}")
+    elif args.command == "report":
+        source = args.snapshot or latest_snapshot()
+        snapshot = json.loads(source.read_text(encoding="utf-8-sig"))
+        policy = json.loads(args.policy.read_text(encoding="utf-8-sig")) if args.policy else None
+        report = build_report(snapshot, policy, limit=args.limit)
+        print(f"Saved private waiver report: {save_report(report).resolve()}")
+        print(render_report(report))
     elif args.command == "transactions":
         transactions_command(args.league_key)
 
