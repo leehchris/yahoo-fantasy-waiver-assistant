@@ -1,0 +1,146 @@
+{
+  "fantasy_content": {
+    "league": [
+      {
+        "league_key": "999.l.123",
+        "name": "Example"
+      },
+      {
+        "players": {
+          "0": {
+            "player": [
+              [
+                {
+                  "player_key": "999.p.1"
+                },
+                {
+                  "player_id": "1"
+                },
+                {
+                  "name": {
+                    "ascii_first": "Example",
+                    "ascii_last": "Example",
+                    "first": "Example",
+                    "full": "Example",
+                    "last": "Example"
+                  }
+                },
+                {},
+                {},
+                {},
+                {},
+                {
+                  "editorial_team_abbr": "EX"
+                },
+                {},
+                {
+                  "bye_weeks": {
+                    "week": "1"
+                  }
+                },
+                {},
+                {},
+                {
+                  "display_position": "QB"
+                },
+                {},
+                {
+                  "is_undroppable": "0"
+                },
+                {
+                  "position_type": "O"
+                },
+                {
+                  "primary_position": "QB"
+                },
+                {
+                  "eligible_positions": [
+                    {
+                      "position": "QB"
+                    }
+                  ]
+                },
+                {},
+                [],
+                [],
+                {},
+                [],
+                {}
+              ]
+            ]
+          },
+          "1": {
+            "player": [
+              [
+                {
+                  "player_key": "999.p.2"
+                },
+                {
+                  "player_id": "1"
+                },
+                {
+                  "name": {
+                    "ascii_first": "Example",
+                    "ascii_last": "Example",
+                    "first": "Example",
+                    "full": "Example",
+                    "last": "Example"
+                  }
+                },
+                {},
+                {
+                  "status": "NA",
+                  "status_full": "Inactive: Coach's Decision or Not on Roster"
+                },
+                {},
+                {},
+                {},
+                {
+                  "editorial_team_abbr": "EX"
+                },
+                {},
+                {
+                  "bye_weeks": {
+                    "week": "1"
+                  }
+                },
+                {},
+                {},
+                {
+                  "display_position": "TE"
+                },
+                {},
+                {
+                  "is_undroppable": "0"
+                },
+                {
+                  "position_type": "O"
+                },
+                {
+                  "primary_position": "TE"
+                },
+                {
+                  "eligible_positions": [
+                    {
+                      "position": "TE"
+                    },
+                    {
+                      "position": "W/R/T"
+                    }
+                  ]
+                },
+                {},
+                [],
+                [],
+                [],
+                [],
+                []
+              ]
+            ]
+          },
+          "count": 2
+        }
+      }
+    ]
+  }
+}

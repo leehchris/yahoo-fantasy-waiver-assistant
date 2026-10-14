@@ -1,0 +1,219 @@
+{
+  "fantasy_content": {
+    "team": [
+      [
+        {
+          "team_key": "999.l.123.t.1"
+        },
+        {},
+        {
+          "name": "Example"
+        },
+        {},
+        {},
+        {},
+        {},
+        [],
+        {
+          "waiver_priority": "1"
+        },
+        {
+          "faab_balance": "1"
+        },
+        {
+          "number_of_moves": "1"
+        },
+        {},
+        {
+          "roster_adds": {
+            "coverage_type": "week",
+            "coverage_value": "1",
+            "value": "0"
+          }
+        },
+        [],
+        {},
+        [],
+        {},
+        {},
+        [],
+        [],
+        [],
+        [],
+        [],
+        {}
+      ],
+      {
+        "roster": {
+          "0": {
+            "players": {
+              "0": {
+                "player": [
+                  [
+                    {
+                      "player_key": "999.p.7"
+                    },
+                    {
+                      "player_id": "1"
+                    },
+                    {
+                      "name": {
+                        "ascii_first": "Example",
+                        "ascii_last": "Example",
+                        "first": "Example",
+                        "full": "Example",
+                        "last": "Example"
+                      }
+                    },
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                      "editorial_team_abbr": "EX"
+                    },
+                    {},
+                    {
+                      "bye_weeks": {
+                        "week": "1"
+                      }
+                    },
+                    {},
+                    {},
+                    {
+                      "display_position": "QB"
+                    },
+                    {},
+                    {
+                      "is_undroppable": "1"
+                    },
+                    {
+                      "position_type": "O"
+                    },
+                    {
+                      "primary_position": "QB"
+                    },
+                    {
+                      "eligible_positions": [
+                        {
+                          "position": "QB"
+                        }
+                      ]
+                    },
+                    {},
+                    [],
+                    [],
+                    {},
+                    [],
+                    {}
+                  ],
+                  {
+                    "selected_position": [
+                      {
+                        "coverage_type": "week",
+                        "week": "1"
+                      },
+                      {
+                        "position": "QB"
+                      },
+                      {}
+                    ]
+                  },
+                  {}
+                ]
+              },
+              "1": {
+                "player": [
+                  [
+                    {
+                      "player_key": "999.p.8"
+                    },
+                    {
+                      "player_id": "1"
+                    },
+                    {
+                      "name": {
+                        "ascii_first": "Example",
+                        "ascii_last": "Example",
+                        "first": "Example",
+                        "full": "Example",
+                        "last": "Example"
+                      }
+                    },
+                    {},
+                    {
+                      "status": "Q",
+                      "status_full": "Questionable"
+                    },
+                    {
+                      "injury_note": "Example injury"
+                    },
+                    {},
+                    {},
+                    {},
+                    {
+                      "editorial_team_abbr": "EX"
+                    },
+                    {},
+                    {
+                      "bye_weeks": {
+                        "week": "1"
+                      }
+                    },
+                    {},
+                    {},
+                    {
+                      "display_position": "RB"
+                    },
+                    {},
+                    {
+                      "is_undroppable": "0"
+                    },
+                    {
+                      "position_type": "O"
+                    },
+                    {
+                      "primary_position": "RB"
+                    },
+                    {
+                      "eligible_positions": [
+                        {
+                          "position": "RB"
+                        },
+                        {
+                          "position": "W/R/T"
+                        }
+                      ]
+                    },
+                    {},
+                    [],
+                    [],
+                    {},
+                    {},
+                    {}
+                  ],
+                  {
+                    "selected_position": [
+                      {
+                        "coverage_type": "week",
+                        "week": "1"
+                      },
+                      {
+                        "position": "RB"
+                      },
+                      {}
+                    ]
+                  },
+                  {}
+                ]
+              },
+              "count": 2
+            }
+          },
+          "coverage_type": "week",
+          "week": "1"
+        }
+      }
+    ]
+  }
+}

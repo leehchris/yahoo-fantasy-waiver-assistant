@@ -1,0 +1,207 @@
+{
+  "fantasy_content": {
+    "league": [
+      {
+        "league_key": "999.l.123",
+        "name": "Example"
+      },
+      {
+        "transactions": {
+          "0": {
+            "transaction": [
+              {
+                "status": "successful",
+                "timestamp": "1",
+                "transaction_id": "1",
+                "transaction_key": "999.l.123.tr.1",
+                "type": "add/drop"
+              },
+              {
+                "players": {
+                  "0": {
+                    "player": [
+                      [
+                        {
+                          "player_key": "999.p.3"
+                        },
+                        {
+                          "player_id": "1"
+                        },
+                        {
+                          "name": {
+                            "ascii_first": "Example",
+                            "ascii_last": "Example",
+                            "first": "Example",
+                            "full": "Example",
+                            "last": "Example"
+                          }
+                        },
+                        {
+                          "editorial_team_abbr": "EX"
+                        },
+                        {
+                          "display_position": "RB"
+                        },
+                        {
+                          "position_type": "O"
+                        }
+                      ],
+                      {
+                        "transaction_data": [
+                          {
+                            "destination_team_key": "999.l.123.t.1",
+                            "destination_team_name": "Example",
+                            "destination_type": "team",
+                            "source_type": "freeagents",
+                            "type": "add"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "1": {
+                    "player": [
+                      [
+                        {
+                          "player_key": "999.p.4"
+                        },
+                        {
+                          "player_id": "1"
+                        },
+                        {
+                          "name": {
+                            "ascii_first": "Example",
+                            "ascii_last": "Example",
+                            "first": "Example",
+                            "full": "Example",
+                            "last": "Example"
+                          }
+                        },
+                        {
+                          "editorial_team_abbr": "EX"
+                        },
+                        {
+                          "display_position": "QB"
+                        },
+                        {
+                          "position_type": "O"
+                        }
+                      ],
+                      {
+                        "transaction_data": {
+                          "destination_type": "waivers",
+                          "source_team_key": "999.l.123.t.1",
+                          "source_team_name": "Example",
+                          "source_type": "team",
+                          "type": "drop"
+                        }
+                      }
+                    ]
+                  },
+                  "count": 2
+                }
+              }
+            ]
+          },
+          "1": {
+            "transaction": [
+              {
+                "status": "successful",
+                "timestamp": "1",
+                "transaction_id": "1",
+                "transaction_key": "999.l.123.tr.1",
+                "type": "add/drop"
+              },
+              {
+                "players": {
+                  "0": {
+                    "player": [
+                      [
+                        {
+                          "player_key": "999.p.5"
+                        },
+                        {
+                          "player_id": "1"
+                        },
+                        {
+                          "name": {
+                            "ascii_first": "Example",
+                            "ascii_last": "Example",
+                            "first": "Example",
+                            "full": "Example",
+                            "last": "Example"
+                          }
+                        },
+                        {
+                          "editorial_team_abbr": "EX"
+                        },
+                        {
+                          "display_position": "WR"
+                        },
+                        {
+                          "position_type": "O"
+                        }
+                      ],
+                      {
+                        "transaction_data": [
+                          {
+                            "destination_team_key": "999.l.123.t.1",
+                            "destination_team_name": "Example",
+                            "destination_type": "team",
+                            "source_type": "freeagents",
+                            "type": "add"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "1": {
+                    "player": [
+                      [
+                        {
+                          "player_key": "999.p.6"
+                        },
+                        {
+                          "player_id": "1"
+                        },
+                        {
+                          "name": {
+                            "ascii_first": "Example",
+                            "ascii_last": "Example",
+                            "first": "Example",
+                            "full": "Example",
+                            "last": "Example"
+                          }
+                        },
+                        {
+                          "editorial_team_abbr": "EX"
+                        },
+                        {
+                          "display_position": "WR"
+                        },
+                        {
+                          "position_type": "O"
+                        }
+                      ],
+                      {
+                        "transaction_data": {
+                          "destination_type": "waivers",
+                          "source_team_key": "999.l.123.t.1",
+                          "source_team_name": "Example",
+                          "source_type": "team",
+                          "type": "drop"
+                        }
+                      }
+                    ]
+                  },
+                  "count": 2
+                }
+              }
+            ]
+          },
+          "count": 2
+        }
+      }
+    ]
+  }
+}

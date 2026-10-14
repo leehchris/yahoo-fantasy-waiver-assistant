@@ -62,7 +62,17 @@ The first live test should verify the returned team_key and league_key.
     python -m yahoo_waiver_assistant available LEAGUE_KEY --status W
     python -m yahoo_waiver_assistant transactions LEAGUE_KEY
 
-These commands intentionally return raw Yahoo JSON for now. The next implementation phase will normalize rosters, players, projections, and transactions into stable internal models after we capture real responses from the live league.
+These commands return normalized JSON. Available-player commands return the requested
+page; snapshot fetches all pages for both FA and W.
+
+    python -m yahoo_waiver_assistant snapshot
+    python -m yahoo_waiver_assistant snapshot --team-key GAME.l.LEAGUE.t.TEAM
+
+Optionally set YAHOO_TEAM_KEY in .env. Without an explicit key, snapshot discovers
+the unique latest-season NFL team. Run from the repository root to save under the
+Git-ignored data/private/ directory. Upload that one file for analysis instead of
+copying terminal output. The file contains private league data, but no OAuth secrets.
+Snapshots cover the transaction history Yahoo returns, not guaranteed archival history.
 
 ## Test
 

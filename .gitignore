@@ -16,3 +16,8 @@ data/private/
 data/cache/
 *.sqlite
 *.db
+
+# Local API captures and packaging metadata
+/free_agents.json
+/transactions.json
+*.egg-info/

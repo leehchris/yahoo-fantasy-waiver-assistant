@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import webbrowser
 from urllib.parse import urlparse
 
@@ -10,7 +11,8 @@ from flask import Flask, request
 from .client import YahooFantasyClient
 from .config import Settings
 from .oauth import TokenStore, YahooOAuth, build_authorization_url, new_state
-from .yahoo_json import discovery_summary
+from .yahoo_json import discovery_summary, normalize_roster, normalize_players, normalize_transactions
+from .snapshot import create_snapshot, save_snapshot
 
 
 def _services():
@@ -93,7 +95,7 @@ def discover_command() -> None:
 
 def roster_command(team_key: str, week: int | None) -> None:
     _, _, client = _services()
-    _print_json(client.roster(team_key, week=week))
+    _print_json(normalize_roster(client.roster(team_key, week=week)))
 
 
 def available_command(
@@ -101,15 +103,15 @@ def available_command(
 ) -> None:
     _, _, client = _services()
     _print_json(
-        client.available_players(
+        normalize_players(client.available_players(
             league_key, status=status, start=start, count=count
-        )
+        ), status)
     )
 
 
 def transactions_command(league_key: str) -> None:
     _, _, client = _services()
-    _print_json(client.transactions(league_key))
+    _print_json(normalize_transactions(client.transactions(league_key)))
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -140,6 +142,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     transactions.add_argument("league_key")
 
+    snapshot = subparsers.add_parser("snapshot", help="Save a complete normalized private snapshot")
+    snapshot.add_argument("--team-key", help="Defaults to YAHOO_TEAM_KEY or unique latest-season team")
+    snapshot.add_argument("--week", type=int)
+
     return parser
 
 
@@ -154,6 +160,10 @@ def main() -> None:
         roster_command(args.team_key, args.week)
     elif args.command == "available":
         available_command(args.league_key, args.status, args.start, args.count)
+    elif args.command == "snapshot":
+        _, _, client = _services()
+        payload = create_snapshot(client, args.team_key or os.getenv("YAHOO_TEAM_KEY"), args.week)
+        print(f"Saved private snapshot: {save_snapshot(payload).resolve()}")
     elif args.command == "transactions":
         transactions_command(args.league_key)
 
