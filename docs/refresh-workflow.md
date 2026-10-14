@@ -67,3 +67,52 @@ its own projection_capture_path, refresh the snapshot, and run the plan command.
 Do not infer a missing future forecast from today's points or an aggregate view.
 Review both alternatives and the combined scenario; individual rows are not a
 compatible set of transactions until recomputed together.
+
+## One refresh and complete report
+
+On Windows, double-click **Refresh My Team.cmd** in the repository folder. It
+refreshes Yahoo's read-only API data, saves a snapshot and a combined private
+report, and opens the report in your browser. The existing `.venv` and Yahoo
+authorization must be set up first. Errors leave the window open for diagnosis.
+
+Alternatively: `python -m yahoo_waiver_assistant refresh --open`.
+Options: `--team-key`, `--lookahead 1..4`, `--limit`, `--history-file`.
+The combined report includes the best current lineup, waiver alternatives,
+upcoming-week scenarios and season performance. Files are uniquely named
+`data/private/fantasy-update-*.json`, `.md`, and (with `--open`) `.html`.
+Nothing submits Yahoo claims or roster changes.
+
+Refresh updates API data, **not browser projections**. Current and future reports
+reuse the existing week-specific Yahoo page captures, subject to their existing
+freshness checks. Missing/stale forecasts require review, not fabricated values.
+
+## Season performance
+
+Refresh fetches each completed week's own roster and league-scored actual points,
+including players since dropped. Team comparisons use the historical starters,
+not today's lineup or bench totals. Player comparisons include bench games during
+weeks on your roster; current players are identified separately in the JSON.
+
+Historical Yahoo forecasts come from retained `Proj Pts` columns in signed-in
+completed-week roster pages. The assistant can capture them through browser tools;
+the CLI does not read browser cookies or automate login. Import rendered DOM
+exports (same table/cell shape as the existing projection parser, plus `week` on
+each page) using:
+
+`python -m yahoo_waiver_assistant import-history PAGES.json --team-key GAME.l.LEAGUE.t.TEAM --current-week N`
+
+This saves `data/private/yahoo-history/TEAM_KEY.json`, reused by refresh.
+Import the complete desired history together: importing replaces that team's cache.
+These are retrospective Yahoo forecasts, not proof of an independently archived
+pregame forecast. Historical forecasts do not expire like upcoming projections.
+Missing forecasts or actual points remain unknown; a season delta requires all
+starter comparisons. Positive-projection non-reserve games qualify for player
+comparisons; byes/zero projections are excluded from those player percentages.
+Zero-point games show their contribution and the difference excluding zeros;
+the tool cannot infer their injury/inactive causes from today's status.
+
+Repeated shortfalls are flagged for review at >=3 comparable weeks, >=60% misses
+and >=20% aggregate shortfall. This is a transparent screening rule, not a
+statistical significance claim or an automatic drop recommendation.
+Rebuild offline with `python -m yahoo_waiver_assistant performance --snapshot PATH`
+using a snapshot created by refresh. All private outputs stay ignored by Git.

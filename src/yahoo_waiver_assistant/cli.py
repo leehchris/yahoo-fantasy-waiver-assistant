@@ -18,6 +18,9 @@ from .report import build_report, latest_snapshot, save_report, render_report
 from .planning import build_upcoming_plan, render_upcoming_plan
 from .future_forecasts import attach_future_projections
 from .plan_storage import save_plan
+from .performance import import_history, history_path, build_performance, render_performance
+from .refresh import refresh, render_bundle
+from .output_storage import save_output
 
 
 def _services():
@@ -166,13 +169,62 @@ def build_parser() -> argparse.ArgumentParser:
     plan.add_argument("--lookahead", type=int, choices=range(1, 5), default=2)
     plan.add_argument("--limit", type=int, default=10)
     plan.add_argument("--max-moves", type=int, choices=range(6), default=3)
+    refresh_parser = subparsers.add_parser('refresh', help='Refresh data and save one lineup, waiver, bye and season report')
+    refresh_parser.add_argument('--team-key')
+    refresh_parser.add_argument('--lookahead', type=int, choices=range(1, 5), default=2)
+    refresh_parser.add_argument('--limit', type=int, default=10)
+    refresh_parser.add_argument('--history-file', type=Path)
+    refresh_parser.add_argument('--open', action='store_true', help='Open the saved report in your browser')
+    performance = subparsers.add_parser('performance', help='Rebuild season performance offline from a refresh snapshot')
+    performance.add_argument('--snapshot', type=Path)
+    history = subparsers.add_parser('import-history', help='Import rendered historical Yahoo roster pages')
+    history.add_argument('pages', type=Path)
+    history.add_argument('--team-key', required=True)
+    history.add_argument('--current-week', type=int, required=True)
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
 
-    if args.command == "auth":
+    if args.command == 'refresh':
+        _, _, client = _services()
+        print('Refreshing your league and building your complete report...')
+        snapshot_path, bundle = refresh(client, args.team_key or os.getenv('YAHOO_TEAM_KEY'),
+                                       lookahead=args.lookahead, limit=args.limit, history_file=args.history_file)
+        markdown = render_bundle(bundle)
+        path = save_output(bundle, markdown, 'fantasy-update')
+        print(f'Saved private snapshot: {snapshot_path.resolve()}')
+        print(f'Saved complete report: {path.with_suffix(".md").resolve()}')
+        if args.open:
+            from .report_html import render_html
+            target = path.with_suffix('.html')
+            content = render_html(markdown)
+            fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                f.write(content)
+            webbrowser.open(target.resolve().as_uri())
+    elif args.command == 'performance':
+        source = args.snapshot or latest_snapshot()
+        snapshot = json.loads(source.read_text(encoding='utf-8-sig'))
+        if 'season_history' not in snapshot:
+            raise ValueError('This snapshot has no season history; run refresh first')
+        report = build_performance(snapshot['season_history'], {p['player_key'] for p in snapshot['roster']['players']})
+        path = save_output(report, render_performance(report), 'season-performance')
+        print(f'Saved season report: {path.with_suffix(".md").resolve()}')
+        print(render_performance(report))
+    elif args.command == 'import-history':
+        from .yahoo_json import league_key_from_team
+        pages = json.loads(args.pages.read_text(encoding='utf-8-sig'))
+        capture = import_history(pages, args.team_key, league_key_from_team(args.team_key), args.current_week)
+        path = history_path(args.team_key)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        # Deliberate cache update; only this team's historical projection cache is replaced.
+        fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            json.dump(capture, f, indent=2)
+        print(f'Saved historical projection cache: {path.resolve()}')
+    elif args.command == "auth":
         auth_command()
     elif args.command == "discover":
         discover_command()
