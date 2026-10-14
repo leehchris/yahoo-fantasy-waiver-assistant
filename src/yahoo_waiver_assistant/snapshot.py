@@ -12,6 +12,7 @@ from .enrichment import (normalize_settings, normalize_league_rosters,
                          fetch_history, acquisition_context)
 from .forecasts import recent_results_estimate, load_provider_projections
 from .yahoo_ui import projection_capture_path
+from .future_forecasts import attach_future_projections
 
 
 def resolve_team(client, team_key: str | None = None) -> str:
@@ -47,7 +48,8 @@ def available_all(client, league_key: str, status: str) -> list[dict]:
 
 
 def create_snapshot(client, team_key: str | None = None, week: int | None = None,
-                    history_weeks: int = 4, projections_file: Path | None = None) -> dict:
+                    history_weeks: int = 4, projections_file: Path | None = None,
+                    lookahead: int = 2) -> dict:
     if not 0 <= history_weeks <= 8:
         raise ValueError('history_weeks must be between 0 and 8')
     team_key = resolve_team(client, team_key)
@@ -107,7 +109,7 @@ def create_snapshot(client, team_key: str | None = None, week: int | None = None
         'projected_players': sum(p['projected_points'] is not None for p in payload['projections']),
         'missing_projections': sum(p['projected_points'] is None for p in payload['projections']),
         'news_note': 'Injury labels and note timestamps are captured; news stories and depth charts are not.'}
-    return payload
+    return attach_future_projections(payload, lookahead)
 
 
 def save_snapshot(payload: dict, directory: Path = Path("data/private")) -> Path:

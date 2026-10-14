@@ -13,6 +13,7 @@ The assistant uses read-only Yahoo Fantasy Sports data to monitor roster changes
 - Live Yahoo response normalization for rosters, free agents, waivers, and transactions
 - League discovery derives league keys from team keys
 - One-command private snapshots with complete available-player pagination
+- Lineup-aware waiver reports and rolling upcoming-week planning
 
 ## Core workflow
 
@@ -208,3 +209,51 @@ IR moves, positional maxima, and other Yahoo transaction rules still require
 review. Zero-projection/bye players may have future stash value beyond this
 current-week screen. Genuine pregame captures are required before historical
 projection-surprise analysis becomes available.
+
+
+## Upcoming-week planning
+
+    python -m yahoo_waiver_assistant plan
+
+The default window is this week plus the next two weeks. The assistant captures
+separate Yahoo weekly forecasts before planning; it never reuses this week's
+points for a future week or decomposes a multiweek aggregate into invented values.
+`snapshot` now includes `future_projections` and `future_projection_coverage` from
+matching private Yahoo captures. Embedded future rows remain usable when a
+snapshot is moved without the original cache; their freshness is still checked.
+
+The plan contains each week's optimized existing-roster points, bye holes,
+forecast coverage, independent add/drop alternatives, and an optional combined
+free-agent scenario. Candidates with zero points now can still be useful later.
+Undroppable players and IR placement are preserved. Comparisons identify the
+first meaningful benefit week and show each week's gain or loss explicitly.
+
+The 1.5-point material rule applies to an individual week, rather than adding
+several tiny gains to force a transaction. Filling an empty slot also requires a
+positive projected-points benefit; a zero-point backup is not useful coverage.
+Weeks have equal weights. These are near-term scenarios, not season-long values.
+
+The combined scenario is a transparent greedy method: after each proposed move
+it recomputes all lineups, protects the newly added player, and avoids counting
+the same improvement twice. It uses currently available FA players, never waiver
+players with unresolved bids. All moves are modeled now within this week's
+remaining acquisition allowance. Future weekly resets and future availability
+are not assumed. Waiver alternatives retain REVIEW and null bids.
+
+Yahoo currently exposes separate next-week and following-week projection views
+in the verified browser. The first live validation captured the complete user
+roster and the first 25 available QB/RB/WR/TE/K players plus all available defenses
+for each future week. This is explicitly a candidate shortlist, not complete
+future coverage of every available player. Known byes count as known zero-scoring
+weeks in the coverage display; absent non-bye forecasts remain unknown.
+
+Use `--lookahead 1` through `4`, `--max-moves 0` through `5`, `--limit N`, or
+`--snapshot PATH`. Longer windows require additional genuine Yahoo captures.
+Missing roster forecasts prevent evaluation of that week; partial windows are
+clearly identified and withhold combined acquisition scenarios. Partial-window
+alternatives are REVIEW only. Both snapshots and individual forecasts require fresh data.
+
+Plans are saved as private `upcoming-plan-*.json` and `.md` files. No credentials
+are required to analyze an already captured snapshot, and no Yahoo transaction
+is executed. News, game locks, positional maximums, IR activation, and longer-term
+bench upside still require review. Phone-triggered remote access is deferred.

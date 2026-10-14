@@ -54,3 +54,16 @@ material add/drop differences, future bye shortages, and data gaps. Each candida
 row is an independent alternative. Research current news before promoting a
 provisional scenario to advice. Do not treat observed winning bids as calibrated
 clearance probabilities, and do not fill missing weighted features with guesses.
+
+
+For upcoming-week requests, capture each future week separately using the Stats
+selector (Week N (proj)). For the user roster, set All Players and the user's
+Fantasy Teams filter and capture Offense, K, and DEF. For available candidates,
+set No Team Selected, All Available Players, and capture QB/RB/WR/TE/K/DEF.
+Check table header sort links match the selected period and filters before
+reading rows; filter controls can update before the table finishes loading.
+State whether the candidate pool is complete or a shortlist. Save each week to
+its own projection_capture_path, refresh the snapshot, and run the plan command.
+Do not infer a missing future forecast from today's points or an aggregate view.
+Review both alternatives and the combined scenario; individual rows are not a
+compatible set of transactions until recomputed together.

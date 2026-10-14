@@ -15,6 +15,9 @@ from .oauth import TokenStore, YahooOAuth, build_authorization_url, new_state
 from .yahoo_json import discovery_summary, normalize_roster, normalize_players, normalize_transactions
 from .snapshot import create_snapshot, save_snapshot
 from .report import build_report, latest_snapshot, save_report, render_report
+from .planning import build_upcoming_plan, render_upcoming_plan
+from .future_forecasts import attach_future_projections
+from .plan_storage import save_plan
 
 
 def _services():
@@ -156,6 +159,13 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("--snapshot", type=Path, help="Defaults to the latest private snapshot")
     report.add_argument("--policy", type=Path, help="Optional private calibrated model inputs")
     report.add_argument("--limit", type=int, default=15)
+    snapshot.add_argument("--lookahead", type=int, choices=range(5), default=2,
+                          help="Upcoming weeks to load from Yahoo captures (default: 2)")
+    plan = subparsers.add_parser("plan", help="Plan upcoming weeks from separate Yahoo weekly forecasts")
+    plan.add_argument("--snapshot", type=Path)
+    plan.add_argument("--lookahead", type=int, choices=range(1, 5), default=2)
+    plan.add_argument("--limit", type=int, default=10)
+    plan.add_argument("--max-moves", type=int, choices=range(6), default=3)
     return parser
 
 
@@ -177,8 +187,16 @@ def main() -> None:
             projections_file = Path(os.environ["YAHOO_PROJECTIONS_FILE"])
         print("Fetching league settings, current players, and recent weekly results...")
         payload = create_snapshot(client, args.team_key or os.getenv("YAHOO_TEAM_KEY"), args.week,
-                                  history_weeks=args.history_weeks, projections_file=projections_file)
+                                  history_weeks=args.history_weeks, projections_file=projections_file, lookahead=args.lookahead)
         print(f"Saved private snapshot: {save_snapshot(payload).resolve()}")
+    elif args.command == "plan":
+        source = args.snapshot or latest_snapshot()
+        snapshot = json.loads(source.read_text(encoding="utf-8-sig"))
+        snapshot = attach_future_projections(snapshot, args.lookahead)
+        plan = build_upcoming_plan(snapshot, args.lookahead, args.limit, args.max_moves)
+        path = save_plan(plan)
+        print(f"Saved private upcoming-week plan: {path.with_suffix('.md').resolve()}")
+        print(render_upcoming_plan(plan))
     elif args.command == "report":
         source = args.snapshot or latest_snapshot()
         snapshot = json.loads(source.read_text(encoding="utf-8-sig"))

@@ -135,3 +135,13 @@ The current report optimizes this week's projected lineup and flags upcoming bye
 holes. It does not yet optimize championship value, future-week projections,
 full-roster stash replacements, or schedule strength through Week 17. These gaps
 remain explicit rather than being collapsed into one-week projection advice.
+
+
+## Upcoming-week planning implementation
+
+The rolling plan now uses separate Yahoo projections for each captured week,
+including the current week plus two future weeks by default. It evaluates future
+bye coverage, exact replacement impact, and a combined FA-only scenario with
+recomputed lineups and acquisition limits. Missing weeks remain explicit.
+Full-season/playoff utility, news-adjusted bench upside, automatic IR activation,
+and calibrated waiver bids remain outside this initial near-term scenario model.
