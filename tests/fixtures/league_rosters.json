@@ -1,0 +1,386 @@
+{
+  "fantasy_content": {
+    "league": [
+      {
+        "league_key": "999.l.123"
+      },
+      {
+        "teams": {
+          "0": {
+            "team": [
+              [
+                {
+                  "team_key": "999.l.123.t.1"
+                },
+                {},
+                {
+                  "name": "Example"
+                },
+                [],
+                {},
+                {},
+                {},
+                [],
+                {
+                  "waiver_priority": "1"
+                },
+                {
+                  "faab_balance": "10"
+                },
+                {},
+                {},
+                {
+                  "roster_adds": {
+                    "coverage_type": "week",
+                    "coverage_value": "1",
+                    "value": "1"
+                  }
+                },
+                [],
+                {},
+                [],
+                {},
+                {},
+                [],
+                [],
+                [],
+                [],
+                [],
+                {}
+              ],
+              {
+                "roster": {
+                  "coverage_type": "week",
+                  "week": "1",
+                  "0": {
+                    "players": {
+                      "0": {
+                        "player": [
+                          [
+                            {
+                              "player_key": "999.p.1"
+                            },
+                            {
+                              "player_id": "1"
+                            },
+                            {
+                              "name": {
+                                "full": "Example",
+                                "first": "Example",
+                                "last": "Example",
+                                "ascii_first": "Example",
+                                "ascii_last": "Example"
+                              }
+                            },
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {
+                              "display_position": "QB"
+                            },
+                            {},
+                            {
+                              "is_undroppable": "0"
+                            },
+                            {},
+                            {},
+                            {
+                              "eligible_positions": [
+                                {
+                                  "position": "QB"
+                                }
+                              ]
+                            },
+                            {},
+                            [],
+                            [],
+                            {},
+                            [],
+                            {}
+                          ],
+                          {
+                            "selected_position": [
+                              {
+                                "coverage_type": "week",
+                                "week": "1"
+                              },
+                              {
+                                "position": "QB"
+                              },
+                              {}
+                            ]
+                          }
+                        ]
+                      },
+                      "1": {
+                        "player": [
+                          [
+                            {
+                              "player_key": "999.p.1"
+                            },
+                            {
+                              "player_id": "1"
+                            },
+                            {
+                              "name": {
+                                "full": "Example",
+                                "first": "Example",
+                                "last": "Example",
+                                "ascii_first": "Example",
+                                "ascii_last": "Example"
+                              }
+                            },
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {
+                              "display_position": "RB"
+                            },
+                            {},
+                            {
+                              "is_undroppable": "1"
+                            },
+                            {},
+                            {},
+                            {
+                              "eligible_positions": [
+                                {
+                                  "position": "RB"
+                                },
+                                {
+                                  "position": "W/R/T"
+                                }
+                              ]
+                            },
+                            {},
+                            [],
+                            [],
+                            {},
+                            {},
+                            {}
+                          ],
+                          {
+                            "selected_position": [
+                              {
+                                "coverage_type": "week",
+                                "week": "1"
+                              },
+                              {
+                                "position": "RB"
+                              },
+                              {}
+                            ]
+                          }
+                        ]
+                      },
+                      "count": 2
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "1": {
+            "team": [
+              [
+                {
+                  "team_key": "999.l.123.t.1"
+                },
+                {},
+                {
+                  "name": "Example"
+                },
+                [],
+                {},
+                {},
+                {},
+                [],
+                {
+                  "waiver_priority": "1"
+                },
+                {
+                  "faab_balance": "10"
+                },
+                {},
+                {},
+                {
+                  "roster_adds": {
+                    "coverage_type": "week",
+                    "coverage_value": "1",
+                    "value": "1"
+                  }
+                },
+                [],
+                {},
+                [],
+                {},
+                {},
+                [],
+                [],
+                [],
+                [],
+                [],
+                {}
+              ],
+              {
+                "roster": {
+                  "coverage_type": "week",
+                  "week": "1",
+                  "0": {
+                    "players": {
+                      "0": {
+                        "player": [
+                          [
+                            {
+                              "player_key": "999.p.1"
+                            },
+                            {
+                              "player_id": "1"
+                            },
+                            {
+                              "name": {
+                                "full": "Example",
+                                "first": "Example",
+                                "last": "Example",
+                                "ascii_first": "Example",
+                                "ascii_last": "Example"
+                              }
+                            },
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {
+                              "display_position": "QB"
+                            },
+                            {},
+                            {
+                              "is_undroppable": "0"
+                            },
+                            {},
+                            {},
+                            {
+                              "eligible_positions": [
+                                {
+                                  "position": "QB"
+                                }
+                              ]
+                            },
+                            {},
+                            [],
+                            [],
+                            {},
+                            [],
+                            {}
+                          ],
+                          {
+                            "selected_position": [
+                              {
+                                "coverage_type": "week",
+                                "week": "1"
+                              },
+                              {
+                                "position": "QB"
+                              },
+                              {}
+                            ]
+                          }
+                        ]
+                      },
+                      "1": {
+                        "player": [
+                          [
+                            {
+                              "player_key": "999.p.1"
+                            },
+                            {
+                              "player_id": "1"
+                            },
+                            {
+                              "name": {
+                                "full": "Example",
+                                "first": "Example",
+                                "last": "Example",
+                                "ascii_first": "Example",
+                                "ascii_last": "Example"
+                              }
+                            },
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {},
+                            {
+                              "display_position": "RB"
+                            },
+                            {},
+                            {
+                              "is_undroppable": "1"
+                            },
+                            {},
+                            {},
+                            {
+                              "eligible_positions": [
+                                {
+                                  "position": "RB"
+                                },
+                                {
+                                  "position": "W/R/T"
+                                }
+                              ]
+                            },
+                            {},
+                            [],
+                            [],
+                            {},
+                            [],
+                            {}
+                          ],
+                          {
+                            "selected_position": [
+                              {
+                                "coverage_type": "week",
+                                "week": "1"
+                              },
+                              {
+                                "position": "RB"
+                              },
+                              {}
+                            ]
+                          }
+                        ]
+                      },
+                      "count": 2
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "count": 2
+        }
+      }
+    ]
+  }
+}

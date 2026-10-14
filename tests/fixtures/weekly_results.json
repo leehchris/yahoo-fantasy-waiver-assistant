@@ -1,0 +1,244 @@
+{
+  "fantasy_content": {
+    "league": [
+      {
+        "league_key": "999.l.123"
+      },
+      {
+        "players": {
+          "0": {
+            "player": [
+              [
+                {
+                  "player_key": "999.p.1"
+                },
+                {
+                  "name": {
+                    "full": "Example"
+                  }
+                }
+              ],
+              {
+                "player_stats": {
+                  "0": {
+                    "coverage_type": "week",
+                    "week": "5"
+                  },
+                  "stats": [
+                    {
+                      "stat": {
+                        "stat_id": "4",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "5",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "6",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "8",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "9",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "10",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "78",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "11",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "12",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "13",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "15",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "16",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "18",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "57",
+                        "value": "1"
+                      }
+                    }
+                  ]
+                },
+                "player_points": {
+                  "0": {
+                    "coverage_type": "week",
+                    "week": "5"
+                  },
+                  "total": "10.00"
+                }
+              }
+            ]
+          },
+          "1": {
+            "player": [
+              [
+                {
+                  "player_key": "999.p.2"
+                },
+                {
+                  "name": {
+                    "full": "Example"
+                  }
+                }
+              ],
+              {
+                "player_stats": {
+                  "0": {
+                    "coverage_type": "week",
+                    "week": "5"
+                  },
+                  "stats": [
+                    {
+                      "stat": {
+                        "stat_id": "4",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "5",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "6",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "8",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "9",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "10",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "78",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "11",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "12",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "13",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "15",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "16",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "18",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "stat": {
+                        "stat_id": "57",
+                        "value": "1"
+                      }
+                    }
+                  ]
+                },
+                "player_points": {
+                  "0": {
+                    "coverage_type": "week",
+                    "week": "5"
+                  },
+                  "total": "10.00"
+                }
+              }
+            ]
+          },
+          "count": 2
+        }
+      }
+    ]
+  }
+}

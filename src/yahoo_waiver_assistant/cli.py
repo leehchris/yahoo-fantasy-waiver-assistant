@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from pathlib import Path
 import webbrowser
 from urllib.parse import urlparse
 
@@ -146,6 +147,10 @@ def build_parser() -> argparse.ArgumentParser:
     snapshot.add_argument("--team-key", help="Defaults to YAHOO_TEAM_KEY or unique latest-season team")
     snapshot.add_argument("--week", type=int)
 
+    snapshot.add_argument("--history-weeks", type=int, default=4, choices=range(9),
+                          help="Completed prior weeks to fetch (default: 4)")
+    snapshot.add_argument("--projections-file", type=Path,
+                          help="Private JSON file of provider projections already scored for this league")
     return parser
 
 
@@ -162,7 +167,12 @@ def main() -> None:
         available_command(args.league_key, args.status, args.start, args.count)
     elif args.command == "snapshot":
         _, _, client = _services()
-        payload = create_snapshot(client, args.team_key or os.getenv("YAHOO_TEAM_KEY"), args.week)
+        projections_file = args.projections_file
+        if projections_file is None and os.getenv("YAHOO_PROJECTIONS_FILE"):
+            projections_file = Path(os.environ["YAHOO_PROJECTIONS_FILE"])
+        print("Fetching league settings, current players, and recent weekly results...")
+        payload = create_snapshot(client, args.team_key or os.getenv("YAHOO_TEAM_KEY"), args.week,
+                                  history_weeks=args.history_weeks, projections_file=projections_file)
         print(f"Saved private snapshot: {save_snapshot(payload).resolve()}")
     elif args.command == "transactions":
         transactions_command(args.league_key)

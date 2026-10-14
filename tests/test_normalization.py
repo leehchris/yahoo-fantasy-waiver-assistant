@@ -71,3 +71,10 @@ def test_entity_fields_do_not_leak_nested_names_or_status():
 def test_invalid_team_key(key):
     with pytest.raises(ValueError):
         league_key_from_team(key)
+
+
+def test_current_player_note_metadata():
+    players = normalize_players({'player': [[{'has_player_notes': '0'},
+                                             {'player_notes_last_timestamp': '123'}]]})
+    assert players[0]['has_player_notes'] is False
+    assert players[0]['player_notes_last_timestamp'] == 123

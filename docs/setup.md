@@ -79,3 +79,15 @@ Snapshots cover the transaction history Yahoo returns, not guaranteed archival h
     pytest
 
 The current tests do not require live Yahoo credentials.
+
+
+## Enriched refreshes
+
+Snapshots now automatically fetch scoring settings, all league rosters, and four
+completed weeks of player results. Provider projections are optional through
+YAHOO_PROJECTIONS_FILE; see README for the validated private JSON format.
+The assistant captures Yahoo projected points from the signed-in fantasy browser
+as the base. Snapshot loads the latest fresh matching private Yahoo capture.
+Recent-results estimates remain separate; missing Yahoo forecasts remain null. No extra upload is required when the assistant
+can read the local repository. Refreshes make multiple read-only requests and
+may take a few minutes. Use --history-weeks 0 for metadata-only captures.

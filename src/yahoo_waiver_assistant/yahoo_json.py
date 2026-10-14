@@ -72,6 +72,8 @@ def normalize_player(value: Any, availability: str | None = None) -> dict:
     result = {key: data.get(key) for key in (
         "player_key", "player_id", "display_position", "primary_position",
         "position_type", "status", "status_full", "injury_note")}
+    result['player_notes_last_timestamp'] = integer(data.get('player_notes_last_timestamp'))
+    result['has_player_notes'] = str(data.get('has_player_notes')).lower() in {'1', 'true'}
     result.update(name=name.get("full") if isinstance(name, dict) else name,
                   team=data.get("editorial_team_abbr"),
                   eligible_positions=unique_scalar_values(data.get("eligible_positions"), "position"),

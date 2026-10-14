@@ -60,3 +60,17 @@ class YahooFantasyClient:
 
     def transactions(self, league_key: str) -> dict:
         return self.get(f"league/{league_key}/transactions")
+
+    def league_settings(self, league_key: str) -> dict:
+        return self.get(f"league/{league_key}/settings")
+
+    def league_rosters(self, league_key: str, week: int) -> dict:
+        if week < 1:
+            raise ValueError("week must be positive")
+        return self.get(f"league/{league_key}/teams/roster;week={week}")
+
+    def weekly_player_stats(self, league_key: str, player_keys: list[str], week: int) -> dict:
+        if not player_keys or len(player_keys) > 25 or week < 1:
+            raise ValueError("Request 1-25 player keys and a positive week")
+        keys = ",".join(player_keys)
+        return self.get(f"league/{league_key}/players;player_keys={keys}/stats;type=week;week={week}")
