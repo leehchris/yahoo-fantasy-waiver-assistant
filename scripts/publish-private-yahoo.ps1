@@ -37,6 +37,8 @@ try {
     New-Item -ItemType Directory -Force -Path $staging | Out-Null
     & ".\.venv\Scripts\python.exe" -m yahoo_waiver_assistant.chatgpt_feed $snapshot.FullName (Join-Path $staging "latest-feed.json")
     if ($LASTEXITCODE -ne 0) { throw "Feed generation failed" }
+    & ".\.venv\Scripts\python.exe" -m yahoo_waiver_assistant.chatgpt_shortlist $snapshot.FullName (Join-Path $staging "latest-shortlist.json")
+    if ($LASTEXITCODE -ne 0) { throw "Shortlist generation failed" }
     foreach ($item in $files) {
         $latest = Get-ChildItem $dir -Filter $item.pattern -File |
           Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
@@ -47,7 +49,7 @@ try {
 } finally { Pop-Location }
 Push-Location $PrivateRepoPath
 try {
-    & $git add -- yahoo/latest-report.md yahoo/latest-report.json yahoo/latest-feed.json
+    & $git add -- yahoo/latest-report.md yahoo/latest-report.json yahoo/latest-feed.json yahoo/latest-shortlist.json
     if ($LASTEXITCODE -ne 0) { throw "Git staging failed." }
     & $git diff --cached --quiet
     if ($LASTEXITCODE -eq 0) { Write-Host "Already up to date."; exit 0 }
