@@ -29,8 +29,7 @@ try {
     $dir = Join-Path $project "data\private"
     $files = @(
         @{pattern="fantasy-update-*.md"; dest="latest-report.md"},
-        @{pattern="fantasy-update-*.json"; dest="latest-report.json"},
-        @{pattern="snapshot-*.json"; dest="latest-snapshot.json"}
+        @{pattern="fantasy-update-*.json"; dest="latest-report.json"}
     )
     $snapshot = Get-ChildItem $dir -Filter "snapshot-*.json" -File | Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
     if ($null -eq $snapshot) { throw "No snapshot available" }
