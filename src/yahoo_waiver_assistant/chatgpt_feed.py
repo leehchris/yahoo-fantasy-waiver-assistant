@@ -31,7 +31,9 @@ def build_feed(snapshot: dict) -> dict:
         row["projection_source"] = projection.get("source")
         # Recent estimates remain separately labeled; never masquerade as projections.
         estimate = estimates.get(player.get("player_key"), {})
-        row["recent_estimate"] = estimate.get("estimated_points")
+        row["recent_estimate"] = estimate.get("projected_points")
+        row["recent_estimate_sample_weeks"] = estimate.get("sample_weeks", [])
+        row["recent_estimate_confidence"] = estimate.get("confidence") if estimate.get("projected_points") is not None else None
         return row
     return {
         "schema_version": 1,
