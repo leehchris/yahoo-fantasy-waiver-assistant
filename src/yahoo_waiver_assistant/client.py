@@ -12,9 +12,11 @@ class YahooFantasyClient:
         self,
         access_token_provider,
         session: requests.Session | None = None,
+        refresh_token_provider=None,
     ):
         self._access_token_provider = access_token_provider
         self.session = session or requests.Session()
+        self._refresh_token_provider = refresh_token_provider
 
     def get(self, resource: str, **params: Any) -> dict:
         resource = resource.lstrip("/")
@@ -25,6 +27,12 @@ class YahooFantasyClient:
             params=query,
             timeout=30,
         )
+        if getattr(response, 'status_code', None) == 401 and self._refresh_token_provider:
+            # One refresh/retry only; never retry forbidden/permission errors.
+            response = self.session.get(
+                f'{FANTASY_BASE_URL}/{resource}',
+                headers={'Authorization': f'Bearer {self._refresh_token_provider()}'},
+                params=query, timeout=30)
         response.raise_for_status()
         return response.json()
 

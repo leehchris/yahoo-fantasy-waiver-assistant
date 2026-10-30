@@ -4,6 +4,7 @@ import json
 import os
 import secrets
 import time
+import tempfile
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -40,7 +41,16 @@ class TokenStore:
 
     def save(self, payload: dict) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        fd, temp = tempfile.mkstemp(dir=self.path.parent, prefix='.yahoo-token-')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as output:
+                json.dump(payload, output, indent=2)
+                output.flush()
+                os.fsync(output.fileno())
+            os.replace(temp, self.path)
+        finally:
+            if os.path.exists(temp):
+                os.unlink(temp)
         try:
             os.chmod(self.path, 0o600)
         except OSError:
@@ -112,6 +122,12 @@ class YahooOAuth:
         if not token:
             raise RuntimeError("Stored Yahoo token response has no access_token.")
         return token
+
+    def refresh_access_token(self) -> str:
+        tokens = self.token_store.load()
+        if not tokens.get('refresh_token'):
+            raise RuntimeError('Yahoo authorization must be renewed with the auth command')
+        return self.refresh(tokens['refresh_token'])['access_token']
 
     def _save_token_response(self, payload: dict) -> dict:
         saved = dict(payload)

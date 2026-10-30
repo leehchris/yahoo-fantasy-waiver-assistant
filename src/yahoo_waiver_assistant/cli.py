@@ -32,7 +32,7 @@ def _services():
         settings.redirect_uri,
         token_store,
     )
-    client = YahooFantasyClient(oauth.access_token)
+    client = YahooFantasyClient(oauth.access_token, refresh_token_provider=oauth.refresh_access_token)
     return settings, oauth, client
 
 
