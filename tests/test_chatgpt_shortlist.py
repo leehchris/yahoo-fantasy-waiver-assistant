@@ -1,4 +1,5 @@
 from yahoo_waiver_assistant.chatgpt_shortlist import build_shortlist
+from datetime import datetime, timezone
 
 
 def test_shortlist_filters_out_inactive_byes_and_sparse_samples():
@@ -12,9 +13,10 @@ def test_shortlist_filters_out_inactive_byes_and_sparse_samples():
                  for key, points, weeks in
                  [("a", 12, [4, 5, 6]), ("b", 50, [4, 5]), ("c", 30, [4, 5]),
                   ("d", 20, [6])]]
-    s = {"captured_at": "2026-10-20T14:10:00Z", "week": 7, "team_key": "470.l.1.t.1",
-         "league_key": "470.l.1", "roster": {"players": [], "name": "My Team"},
-         "league_settings": {"name": "League"}, "acquisitions": {},
+    s = {"captured_at": datetime.now(timezone.utc).isoformat(), "week": 7, "team_key": "470.l.1.t.1",
+         "league_key": "470.l.1", "roster": {"players": [player('roster1', 'Roster', 'RB')], "name": "My Team", "week": 7, "team_key": "470.l.1.t.1"},
+         "league_settings": {"name": "League", "current_week": 7, "league_key": "470.l.1"}, "acquisitions": {},
+         "availability_coverage": {"FA": {"complete": True, "count": 0}, "W": {"complete": True, "count": 4}},
          "waivers": pool, "free_agents": [], "projections": [],
          "recent_estimates": estimates, "transactions": []}
     result = build_shortlist(s)

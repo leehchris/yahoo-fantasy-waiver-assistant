@@ -78,6 +78,10 @@ def create_snapshot(client, team_key: str | None = None, week: int | None = None
     payload['recent_results'] = history
     captured = datetime.now(timezone.utc).isoformat()
     payload['captured_at'] = captured
+    payload['availability_coverage'] = {
+        status: {'complete': True, 'count': len(payload[field]),
+                 'method': 'paginated_until_empty_response'}
+        for status, field in (('FA', 'free_agents'), ('W', 'waivers'))}
     payload['recent_estimates'] = [recent_results_estimate(p, history, week, captured) for p in players.values()]
     payload['projections'] = [{'player_key': key, 'week': week, 'projected_points': None,
                                'source': 'yahoo_projection_missing', 'captured_at': None,

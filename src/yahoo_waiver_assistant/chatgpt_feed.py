@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 PLAYER_FIELDS = ("player_key", "name", "team", "primary_position", "display_position",
@@ -20,6 +20,8 @@ def slim_player(player: dict) -> dict:
 
 
 def build_feed(snapshot: dict) -> dict:
+    from .freshness import validate_snapshot
+    verification = validate_snapshot(snapshot)
     roster = snapshot["roster"]
     candidates = snapshot.get("waivers", []) + snapshot.get("free_agents", [])
     forecasts = {row["player_key"]: row for row in snapshot.get("projections", [])}
@@ -27,7 +29,18 @@ def build_feed(snapshot: dict) -> dict:
     def enrich(player: dict) -> dict:
         row = slim_player(player)
         projection = forecasts.get(player.get("player_key"), {})
-        row["yahoo_projected_points"] = projection.get("projected_points")
+        try:
+            stamp = datetime.fromisoformat(projection['captured_at'].replace('Z', '+00:00'))
+            now = datetime.now(timezone.utc)
+            usable = (stamp.utcoffset() is not None and now - stamp <= timedelta(hours=48)
+                      and stamp <= now + timedelta(minutes=5)
+                      and projection.get('week') == snapshot['week']
+                      and projection.get('source') == 'yahoo_fantasy_ui')
+        except (KeyError, TypeError, ValueError, AttributeError):
+            usable = False
+        row["yahoo_projected_points"] = projection.get("projected_points") if usable else None
+        row['projection_captured_at'] = projection.get('captured_at')
+        row['projection_usable'] = usable
         row["projection_source"] = projection.get("source")
         # Recent estimates remain separately labeled; never masquerade as projections.
         estimate = estimates.get(player.get("player_key"), {})
@@ -37,6 +50,8 @@ def build_feed(snapshot: dict) -> dict:
         return row
     return {
         "schema_version": 1,
+        "verification": verification,
+        "read_only": True,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "captured_at": snapshot.get("captured_at"),
         "team_key": snapshot.get("team_key"),
